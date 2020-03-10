@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleOutput.cs" />
     <Compile Include="DoorSensor.cs" />
     <Compile Include="IDoorSensor.cs" />
     <Compile Include="IState.cs" />

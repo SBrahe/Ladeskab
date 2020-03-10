@@ -10,7 +10,7 @@ namespace Ladeskab
     {
         event EventHandler<EventArgs> DoorOpened;
         event EventHandler<EventArgs> DoorClosed;
-
+        
         void OnDoorOpened();
         void OnDoorClosed();
 

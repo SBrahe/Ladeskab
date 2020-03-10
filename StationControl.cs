@@ -17,9 +17,11 @@ namespace Ladeskab
         public IState OCCUPIED_DOOR_CLOSED_AWAITING_RFID { get; set; }
         public IState OCCUPIED_DOOR_CLOSED_CHECKING_RFID { get; set; }
 
-        private IState currentState;
+        private IState _currentState;
+        public IDoorSensor DoorSensor { get; set; }
+        public IUserOutput UserOutput { get; set; }
 
-        public StationControl()
+        public StationControl(IDoorSensor doorSensor, IUserOutput userOutput)
         {
             VACANT_DOOR_CLOSED_NO_PHONE_CONNECTED=new VacantDoorClosedNoPhoneConnected(this);
             VACANT_DOOR_OPEN_NO_PHONE_CONNECTED=new VacantDoorOpenNoPhoneConnected(this);
@@ -30,38 +32,44 @@ namespace Ladeskab
             OCCUPIED_DOOR_CLOSED_CHECKING_RFID = new OccupiedDoorClosedCheckingRFID(this);
 
 
-            currentState = VACANT_DOOR_CLOSED_NO_PHONE_CONNECTED;
+            _currentState = VACANT_DOOR_CLOSED_NO_PHONE_CONNECTED;
+            DoorSensor = doorSensor;
+            UserOutput = userOutput;
+
+
+            //Attaching events
+            doorSensor.DoorOpened += DoorOpenedHandler;
         }
 
         public void SetState(IState newState)
         {
-            this.currentState = newState;
+            this._currentState = newState;
         }
 
 
         public void DoorOpenedHandler(object sender, EventArgs e)
         {
-            currentState.OnDoorOpened();
+            _currentState.OnDoorOpened();
         }
 
         public void DoorClosedHandler(object sender, EventArgs e)
         {
-            currentState.OnDoorClosed();
+            _currentState.OnDoorClosed();
         }
 
         public void PhoneConnectedHandler(object sender, EventArgs e)
         {
-            currentState.OnPhoneConnected();
+            _currentState.OnPhoneConnected();
         }
 
         public void PhoneDisconnectedHandler(object sender, EventArgs e)
         {
-            currentState.OnPhoneDisconnected();
+            _currentState.OnPhoneDisconnected();
         }
 
         public void RfidDetectedHandler(object sender, EventArgs e)
         {
-            currentState.OnRfidDetected();
+            _currentState.OnRfidDetected();
         }
 
     }

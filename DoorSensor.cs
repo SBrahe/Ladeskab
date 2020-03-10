@@ -12,12 +12,12 @@ namespace Ladeskab
         public event EventHandler<EventArgs> DoorClosed;
         public void OnDoorOpened()
         {
-            DoorOpened?.Invoke(this, EventArgs
+            DoorOpened?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnDoorClosed()
         {
-            DoorClosed?.Invoke(this, null);
+            DoorClosed?.Invoke(this, EventArgs.Empty);
         }
     }
 }
