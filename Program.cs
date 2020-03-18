@@ -10,6 +10,7 @@ namespace Ladeskab
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("tre");
         }
     }
 }
